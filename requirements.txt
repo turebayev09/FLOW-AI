@@ -1,1 +1,5 @@
-flask flask-cors google-genai python-dotenv gunicorn
+flask 
+flask-cors 
+google-genai 
+python-dotenv 
+gunicorn
