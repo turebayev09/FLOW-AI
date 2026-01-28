@@ -1,14 +1,13 @@
 import os
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from google import genai
 from google.genai import types
-from dotenv import load_dotenv
-
-load_dotenv()
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
-api_key = os.getenv('GEMINI_API_KEY')
+api_key = os.environ.get('GOOGLE_API_KEY')
 client = None
 if api_key:
     client = genai.Client(api_key=api_key)
@@ -27,7 +26,6 @@ def home():
           import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
           import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-          // Ваш конфиг (который вы скинули)
           const firebaseConfig = {
             apiKey: "AIzaSyBghFUIfqr3GdUz5G7vf04gpoOPa0gVWo8",
             authDomain: "flow-ai-ccc5c.firebaseapp.com",
@@ -38,12 +36,10 @@ def home():
             measurementId: "G-FYSRWN6Q3G"
           };
 
-          // Инициализация
           const app = initializeApp(firebaseConfig);
           const auth = getAuth(app);
           const provider = new GoogleAuthProvider();
 
-          // Глобальные функции для кнопок
           window.login = () => {
               signInWithPopup(auth, provider)
                  .then((result) => console.log("Logged in:", result.user))
@@ -52,7 +48,6 @@ def home():
 
           window.logout = () => signOut(auth);
 
-          // Следим за состоянием входа
           onAuthStateChanged(auth, (user) => {
               const loginScreen = document.getElementById('login-screen');
               const mainApp = document.getElementById('main-app');
@@ -122,6 +117,7 @@ def home():
             resultDiv.textContent = '⏳ Обработка...';
 
             try {
+                // ВАЖНО: Когда задеплоишь на Render, замени '/' на свою ссылку 'https://...onrender.com/analyze'
                 const response = await fetch('/analyze', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -138,23 +134,32 @@ def home():
     </html>
     """
 
-@app.route('/analyze', methods=['POST'])
+@app.route('/analyze', methods=['POST', 'OPTIONS'])
 def analyze_code():
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'}), 200
+    if not client:
+        return jsonify({'advice': 'Ошибка: API ключ не настроен на сервере.'}), 500
+    
     data = request.json
     mode = data.get('mode', 'mentor')
     user_code = data.get('code', '')
     
     system_instr = MENTOR_PROMPT if mode == 'mentor' else SOLUTION_PROMPT
     
-    response = client.models.generate_content(
-        model='gemini-2.5-flash',
-        contents=user_code,
-        config=types.GenerateContentConfig(
-            system_instruction=system_instr,
-            temperature=0.7 if mode == 'mentor' else 0.1
+    try:
+        response = client.models.generate_content(
+            model='gemini-2.0-flash',
+            contents=user_code,
+            config=types.GenerateContentConfig(
+                system_instruction=system_instr,
+                temperature=0.7 if mode == 'mentor' else 0.1
+            )
         )
-    )
-    return jsonify({'advice': response.text})
+        return jsonify({'advice': response.text})
+    except Exception as e:
+        return jsonify({'advice': f'Ошибка ИИ: {str(e)}'}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
