@@ -79,10 +79,28 @@
             const mainApp = document.getElementById('main-app');
             const userEmail = document.getElementById('user-email');
 
+            
+            onAuthStateChanged(auth, (user) => {
+            const loginScreen = document.getElementById('login-screen');
+            const mainApp = document.getElementById('main-app');
+            const userEmail = document.getElementById('user-email');
+
             if (user) {
                 loginScreen.style.display = 'none';
                 mainApp.style.display = 'block';
                 userEmail.textContent = user.email;
+
+                // --- СИЛОВОЕ СОЗДАНИЕ БЛОКА СТАТИСТИКИ ---
+                let statsDiv = document.getElementById('statsDisplay');
+                if (!statsDiv) {
+                    statsDiv = document.createElement('div');
+                    statsDiv.id = 'statsDisplay';
+                    // Вставляем блок перед полем ввода кода
+                    const codeInput = document.getElementById('codeInput');
+                    if (codeInput) {
+                        codeInput.parentNode.insertBefore(statsDiv, codeInput);
+                    }
+                }
                 displayStats(); 
             } else {
                 loginScreen.style.display = 'block';
@@ -107,11 +125,13 @@
             const statsDiv = document.getElementById('statsDisplay');
             if (statsDiv) {
                 statsDiv.innerHTML = `
-                    <div>
+                    <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-left: 5px solid #007bff; padding: 15px; border-radius: 8px; margin-bottom: 20px; color: #333;">
                         <h4 style="margin:0 0 10px 0;">📊 Твой прогресс обучения:</h4>
-                        <span>Запросов: <strong>${stats.totalRequests}</strong></span>
-                        <span>Ментор: <strong>${stats.mentorSessions}</strong></span>
-                        <span>Решений: <strong>${stats.solutionSessions}</strong></span>
+                        <div style="display: flex; gap: 15px; font-size: 0.9em;">
+                            <span>Запросов: <strong>${stats.totalRequests}</strong></span>
+                            <span>Ментор: <strong style="color: #28a745;">${stats.mentorSessions}</strong></span>
+                            <span>Решений: <strong style="color: #dc3545;">${stats.solutionSessions}</strong></span>
+                        </div>
                     </div>`;
             }
         };
@@ -126,7 +146,7 @@
             resultDiv.innerHTML = '⏳ ИИ анализирует код...';
 
             try {
-                const response = await fetch('/analyze', { // Используем относительный путь для Render
+                const response = await fetch('/analyze', { 
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ code: code, mode: mode })
@@ -141,15 +161,16 @@
                 else stats.solutionSessions += 1;
                 localStorage.setItem('errorStats', JSON.stringify(stats));
                 
-                displayStats(); // Обновляем блок на экране
+                displayStats(); // Обновляем цифры на экране
 
                 const header = mode === 'mentor' ? '💡 Совет:' : '✅ Код:';
                 let cleanAdvice = data.advice.replace(/```python|```/g, '').trim();
-                resultDiv.innerHTML = `<strong>${header}</strong><br><div style="margin-top:10px; font-family:monospace; background:#eee; padding:10px; border-radius:5px;">${cleanAdvice.replace(/\n/g, '<br>')}</div>`;
+                resultDiv.innerHTML = `<strong>${header}</strong><br><div style="margin-top:10px; font-family:monospace; background:#eee; padding:10px; border-radius:5px; color: black;">${cleanAdvice.replace(/\n/g, '<br>')}</div>`;
             } catch (e) {
-                resultDiv.innerHTML = `<span style="color:red">Ошибка соединения.</span>`;
+                resultDiv.innerHTML = `<span style="color:red">Ошибка соединения с сервером.</span>`;
             }
         };
+        });
     </script>
 </body>
 </html>
