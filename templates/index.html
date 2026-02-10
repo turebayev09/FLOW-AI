@@ -1,176 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>FLOW AI - Login & Mentor</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLOW AI - Intelligent Code Mentor</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; }
-        .container { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); width: 100%; max-width: 800px; }
-        h1 { color: #667eea; text-align: center; }
-        textarea { width: 100%; height: 200px; padding: 15px; border-radius: 8px; border: 2px solid #eee; font-family: monospace; box-sizing: border-box; }
-        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
-        button { flex: 1; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; color: white; transition: 0.2s; }
-        .login-btn { background: #4285F4; width: 100%; }
-        .mentor-btn { background: #3498db; }
-        .sol-btn { background: #2ecc71; }
-        .logout-link { color: #666; cursor: pointer; text-decoration: underline; font-size: 12px; }
-        #result { margin-top: 20px; padding: 15px; background: #f9f9f9; border-left: 4px solid #667eea; display: none; white-space: pre-wrap; color: black; }
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #2ecc71;
+            --info-color: #3498db;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); 
+            margin: 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+        }
+
+        .container { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 20px; 
+            width: 90%; 
+            max-width: 800px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
+        }
+
+        h1 { color: var(--primary-color); text-align: center; margin-bottom: 30px; }
         
-        /* Стили блока статистики */
-        #statsDisplay div {
-            background: #f8f9fa; border: 1px solid #dee2e6; border-left: 5px solid #007bff; 
-            padding: 15px; border-radius: 8px; margin-bottom: 20px; color: #333;
+        textarea { 
+            width: 100%; 
+            height: 200px; 
+            padding: 15px; 
+            border: 2px solid #edf2f7; 
+            border-radius: 12px; 
+            font-family: 'Fira Code', monospace; 
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        .btn-group { display: flex; gap: 15px; margin-top: 20px; }
+        
+        button { 
+            flex: 1; 
+            padding: 15px; 
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            color: white; 
+            transition: transform 0.2s, opacity 0.2s; 
+        }
+
+        button:active { transform: scale(0.98); }
+        .mentor-btn { background: var(--info-color); }
+        .sol-btn { background: var(--success-color); }
+        
+        .user-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 0.9em; color: #4a5568; }
+        .logout-link { color: #e53e3e; cursor: pointer; text-decoration: underline; }
+
+        #result { 
+            margin-top: 25px; 
+            padding: 20px; 
+            background: #f7fafc; 
+            border-left: 5px solid var(--primary-color); 
+            border-radius: 8px;
+            display: none; 
+            color: #2d3748;
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div id="login-screen">
-            <h1>FLOW AI</h1>
-            <p style="text-align:center">Войдите, чтобы начать обучение</p>
-            <button onclick="login()" class="login-btn">Войти через Google</button>
+    <div class="container" id="app-container">
         </div>
-
-        <div id="main-app" style="display:none">
-            <div style="display:flex; justify-content: space-between; align-items: center">
-                <h1>FLOW AI</h1>
-                <div>
-                    <span id="user-email" style="font-size: 12px; color: #666"></span><br>
-                    <span onclick="logout()" class="logout-link">Выйти</span>
-                </div>
-            </div>
-
-            <div id="statsDisplay"></div>
-
-            <textarea id="codeInput" placeholder="# Вставьте ваш Python код здесь..."></textarea>
-            
-            <div class="btn-group">
-                <button onclick="processCode('mentor')" class="mentor-btn">Анализ кода</button>
-                <button onclick="processCode('solution')" class="sol-btn">Решение</button>
-            </div>
-            
-            <div id="result"></div>
-        </div>
-    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBghFUIfqr3GdUz5G7vf04gpoOPa0gVWo8",
             authDomain: "flow-ai-ccc5c.firebaseapp.com",
             projectId: "flow-ai-ccc5c",
             storageBucket: "flow-ai-ccc5c.firebasestorage.app",
             messagingSenderId: "384050736910",
-            appId: "1:384050736910:web:884771f316b3b681f9715f",
-            measurementId: "G-FYSRWN6Q3G"
+            appId: "1:384050736910:web:884771f316b3b681f9715f"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
+        const container = document.getElementById('app-container');
 
-        window.login = () => signInWithPopup(auth, provider).catch(e => alert(e.message));
-        window.logout = () => signOut(auth);
-
+        // State Listener
         onAuthStateChanged(auth, (user) => {
-            const loginScreen = document.getElementById('login-screen');
-            const mainApp = document.getElementById('main-app');
-            const userEmail = document.getElementById('user-email');
-
-            
-            onAuthStateChanged(auth, (user) => {
-            const loginScreen = document.getElementById('login-screen');
-            const mainApp = document.getElementById('main-app');
-            const userEmail = document.getElementById('user-email');
-
-            if (user) {
-                loginScreen.style.display = 'none';
-                mainApp.style.display = 'block';
-                userEmail.textContent = user.email;
-
-                // --- СИЛОВОЕ СОЗДАНИЕ БЛОКА СТАТИСТИКИ ---
-                let statsDiv = document.getElementById('statsDisplay');
-                if (!statsDiv) {
-                    statsDiv = document.createElement('div');
-                    statsDiv.id = 'statsDisplay';
-                    // Вставляем блок перед полем ввода кода
-                    const codeInput = document.getElementById('codeInput');
-                    if (codeInput) {
-                        codeInput.parentNode.insertBefore(statsDiv, codeInput);
-                    }
-                }
-                displayStats(); 
-            } else {
-                loginScreen.style.display = 'block';
-                mainApp.style.display = 'none';
-            }
+            user ? renderDashboard(user) : renderAuth();
         });
 
-        // Функция получения статистики из памяти браузера
-        function getStats() {
-            let stats = localStorage.getItem('errorStats');
-            if (!stats) {
-                stats = { totalRequests: 0, mentorSessions: 0, solutionSessions: 0 };
-                localStorage.setItem('errorStats', JSON.stringify(stats));
-                return stats;
-            }
-            return JSON.parse(stats);
+        function renderAuth() {
+            container.innerHTML = `
+                <div style="text-align: center;">
+                    <h1>FLOW AI</h1>
+                    <p>Welcome to the AI Code Mentor. Please sign in to continue.</p>
+                    <button id="loginBtn" style="background:#4285F4; width:100%; margin-top:20px;">Sign in with Google</button>
+                </div>`;
+            document.getElementById('loginBtn').onclick = () => signInWithPopup(auth, provider);
         }
 
-        // Глобальная функция отрисовки
-        window.displayStats = function() {
-            const stats = getStats();
-            const statsDiv = document.getElementById('statsDisplay');
-            if (statsDiv) {
-                statsDiv.innerHTML = `
-                    <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-left: 5px solid #007bff; padding: 15px; border-radius: 8px; margin-bottom: 20px; color: #333;">
-                        <h4 style="margin:0 0 10px 0;">📊 Твой прогресс обучения:</h4>
-                        <div style="display: flex; gap: 15px; font-size: 0.9em;">
-                            <span>Запросов: <strong>${stats.totalRequests}</strong></span>
-                            <span>Ментор: <strong style="color: #28a745;">${stats.mentorSessions}</strong></span>
-                            <span>Решений: <strong style="color: #dc3545;">${stats.solutionSessions}</strong></span>
-                        </div>
-                    </div>`;
-            }
-        };
+        function renderDashboard(user) {
+            container.innerHTML = `
+                <div class="user-info">
+                    <span>Logged in as: <b>${user.email}</b></span>
+                    <span id="logoutBtn" class="logout-link">Logout</span>
+                </div>
+                <h1>FLOW AI</h1>
+                <textarea id="codeInput" placeholder="# Paste your Python code here..."></textarea>
+                <div class="btn-group">
+                    <button id="mentorBtn" class="mentor-btn">Code Analysis</button>
+                    <button id="solBtn" class="sol-btn">Get Solution</button>
+                </div>
+                <div id="result"></div>
+            `;
 
-        // Главная функция обработки кода
-        window.processCode = async function(mode) {
+            document.getElementById('logoutBtn').onclick = () => signOut(auth);
+            document.getElementById('mentorBtn').onclick = () => handleProcess('mentor');
+            document.getElementById('solBtn').onclick = () => handleProcess('solution');
+        }
+
+        async function handleProcess(mode) {
             const code = document.getElementById('codeInput').value;
-            const resultDiv = document.getElementById('result');
-            if (!code.trim()) return alert('Введите код!');
+            const resBox = document.getElementById('result');
+            
+            if (!code.trim()) {
+                alert("Please enter some code first.");
+                return;
+            }
 
-            resultDiv.style.display = 'block';
-            resultDiv.innerHTML = '⏳ ИИ анализирует код...';
+            resBox.style.display = 'block';
+            resBox.innerHTML = "⏳ Processing your request...";
 
             try {
-                const response = await fetch('/analyze', { 
+                const response = await fetch('/analyze', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code: code, mode: mode })
+                    body: JSON.stringify({ code, mode })
                 });
-
-                const data = await response.json();
-
-                // Обновляем и сохраняем статистику
-                let stats = getStats();
-                stats.totalRequests += 1;
-                if (mode === 'mentor') stats.mentorSessions += 1;
-                else stats.solutionSessions += 1;
-                localStorage.setItem('errorStats', JSON.stringify(stats));
                 
-                displayStats(); // Обновляем цифры на экране
-
-                const header = mode === 'mentor' ? '💡 Совет:' : '✅ Код:';
-                let cleanAdvice = data.advice.replace(/```python|```/g, '').trim();
-                resultDiv.innerHTML = `<strong>${header}</strong><br><div style="margin-top:10px; font-family:monospace; background:#eee; padding:10px; border-radius:5px; color: black;">${cleanAdvice.replace(/\n/g, '<br>')}</div>`;
-            } catch (e) {
-                resultDiv.innerHTML = `<span style="color:red">Ошибка соединения с сервером.</span>`;
+                const data = await response.json();
+                resBox.innerHTML = `<strong>${mode === 'mentor' ? '💡 Mentor Advice:' : '✅ Solution:'}</strong><br><pre style="white-space: pre-wrap; margin-top:10px;">${data.advice}</pre>`;
+            } catch (error) {
+                resBox.innerHTML = "<span style='color:red;'>Server Error. Please try again later.</span>";
             }
-        };
-        });
+        }
     </script>
 </body>
 </html>
