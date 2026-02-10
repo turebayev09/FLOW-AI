@@ -4,8 +4,7 @@ from flask_cors import CORS
 from google import genai
 from google.genai import types
 
-app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+app = Flask(__name__, template_folder='templates', static_folder='static')
 
 api_key = os.environ.get('GOOGLE_API_KEY')
 client = None
@@ -116,8 +115,7 @@ def home():
             resultDiv.style.display = 'block';
             resultDiv.textContent = '⏳ Обработка...';
 
-            try {
-                // ВАЖНО: Когда задеплоишь на Render, замени '/' на свою ссылку 'https://...onrender.com/analyze'
+            try {de
                 const response = await fetch('/analyze', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -156,7 +154,7 @@ def analyze_code():
                 temperature=0.7 if mode == 'mentor' else 0.1
             )
         )
-        return jsonify({'advice': response.text})
+        return jsonify({'advice': response.text.strip()})
     except Exception as e:
         return jsonify({'advice': f'Ошибка ИИ: {str(e)}'}), 500
 
