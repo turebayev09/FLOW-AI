@@ -49,6 +49,7 @@ Research on intelligent tutoring systems suggests that domain-specific education
 The design of the developed AI system is based on principles commonly described in intelligent tutoring research. Studies emphasize that effective educational AI systems should focus on explanation quality, adaptability, and learner engagement rather than simply providing correct answers [3], [4].
 
 Similar to approaches described in recent AI-assisted programming studies, the system analyzes user-submitted code and provides feedback explaining the cause of errors and possible solutions [6], [8]. Unlike traditional rule-based systems, AI-driven assistants can adjust explanations depending on the user’s question and level of understanding, which has been shown to improve learning outcomes [6].
+
 3. Methods for Solving the Research Tasks
 To evaluate the effectiveness of the developed domain-specialized AI system, a structured experimental methodology was applied. A set of programming tasks of equal difficulty was prepared, covering beginner-level topics such as variables, conditional statements, loops, and simple algorithms.
 The experiment was conducted in two stages. First, participants solved programming tasks without AI assistance. Second, comparable tasks were solved using the developed AI system. This allowed for comparative analysis of learning effectiveness.
