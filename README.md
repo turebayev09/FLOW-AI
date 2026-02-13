@@ -10,17 +10,6 @@ Mentor: Turebayev Azat Arturovich
 City: Astana, 2026
 
 
-Table of contents: 
-
-Abstract……………………………………………………………………………3
-
-Introduction………………………………………………………………………..4
-
-Research section…………………………………………………………………...5
-
-Conclusion…………………………………………………………………………7
-
-References…………………………………………………………………………7
 
 
 ## **Abstract**.
