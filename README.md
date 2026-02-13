@@ -2,11 +2,11 @@
 ##  an AI-mentor for learning Python
 Title page.Organization: Nazarbayev Intellectual School, Aktau 
 
-Authors: Turebayev Azat Arturovich 10 «C», Baktibayev Alikhan Kurmangalievich 10 «C», Ermura Aqtoty Nurbaiqyzy
+Authors: Turebayev Azat Arturovich 10 «C», Baktibayev Alikhan Kurmangalievich 10 «C», Ermura Aqtoty Nurbaiqyzy 10 «G»
 
 Title: Flow AI
 Field and section: AI programming
-Mentor: Turebayev Azat Arturovich
+Mentor: Edil Abdykalykov
 City: Astana, 2026
 
 
