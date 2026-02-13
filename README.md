@@ -18,7 +18,7 @@ The research was conducted in several stages: analysis of existing approaches to
 The novelty of this research lies in the creation of a narrowly focused AI system that possesses deeper contextual understanding of programming concepts within its specific domain. Unlike general AI tools, the developed system is optimized for explaining programming logic, debugging, and guiding beginners step by step. The project was completed independently by the authors without external mentorship.
 The results demonstrate that the specialized AI improves conceptual understanding, reduces repeated errors, and increases learning efficiency. The practical significance of this work is the potential implementation of domain-specific AI assistants in school programming education and self-study environments.                                                        
 
-### Introduction.
+## Introduction.
 In recent years, programming has become one of the most important skills in modern education and professional development. It is widely applied in science, engineering, business, and everyday technologies. However, many students experience significant difficulties when learning programming due to abstract concepts, strict syntax rules, and the need for structured logical thinking. Beginners often struggle with debugging, understanding program flow, and independently identifying errors, which can reduce motivation and slow down the learning process.
 At the same time, artificial intelligence technologies are rapidly developing and increasingly being integrated into educational environments. Most existing AI systems are general-purpose tools designed to operate across multiple subject areas. While such systems provide broad access to information, they are not always optimized for deep conceptual support within a specific academic discipline. Programming education, in particular, requires precise explanations, structured reasoning, and accurate analysis of code errors.
 A domain-specialized AI system focused exclusively on programming may provide deeper contextual understanding and more relevant feedback compared to general-purpose AI tools. By concentrating on a single subject area, such a system can prioritize programming logic, common beginner mistakes, and step-by-step explanation strategies. This creates the potential for more effective individualized learning support.
@@ -29,7 +29,7 @@ The methods used to solve these tasks include analytical review of scientific li
 
 
 
-#### Research section
+## Research section
 1. Analytical Review of Existing Results.
 Research on programming education shows that beginner students frequently struggle with syntax errors, algorithmic thinking, and understanding program flow [1], [2]. One of the key challenges identified in multiple studies is the lack of immediate and individualized feedback, which often leads to repeated mistakes and decreased motivation [1].
 Traditional educational approaches, such as classroom lectures and textbooks, are limited in their ability to adapt to individual learning pace and style. As noted by Bennedsen and Caspersen, high failure rates in introductory programming courses are partially caused by insufficient personalized support [2]. Digital learning platforms attempt to address this issue through automated testing and predefined hints; however, these systems usually provide fixed responses and lack contextual understanding [3].
@@ -45,7 +45,7 @@ Figure 1: Pedagogical benefits
 The results obtained in this study are consistent with findings reported in recent research on AI in programming education. Multiple studies indicate that personalized feedback is one of the most significant advantages of AI-based learning systems [6], [7]. As shown in Figure 1, personalized feedback (44.83%) was identified as the most impactful factor, supporting conclusions made by Tang et al. Regarding scalable AI feedback in programming classrooms [7].
 Learning gains and improved time efficiency observed in this research are also supported by previous studies, which report that AI assistants help reduce debugging time and improve conceptual understanding [6], [8]. However, researchers also emphasize that AI should be used as a complementary tool rather than a replacement for traditional instruction [4], [5], which aligns with the conclusions of this work.
 Conclusion. The findings of this research confirm conclusions made in previous studies that artificial intelligence can significantly support programming education by providing adaptive feedback and reducing learning difficulties [4], [6]. The independently developed AI system demonstrates practical value and aligns with current trends in educational technology development [5]
-##### References.
+### References.
 [1] Robins A., Rountree J., Rountree N.
 Learning and Teaching Programming: A Review and Discussion.
 Computer Science Education.
