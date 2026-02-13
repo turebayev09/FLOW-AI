@@ -46,6 +46,11 @@ Most modern AI systems used in education are general-purpose tools designed to o
 Research on intelligent tutoring systems suggests that domain-specific educational systems often provide more targeted feedback and structured assistance within their field of specialization [3], [4]. This supports the hypothesis that a narrowly focused AI assistant, concentrated exclusively on programming, may offer deeper conceptual understanding and more effective educational support compared to general-purpose AI tools.
 
 2. Description of the Developed AI System.
+   <p align="center">
+    <strong>Video example of task execution</strong><br>
+    <img src="sample of usage" alt="Video Demonstration of Task Execution" width="800">
+</p>
+
 The design of the developed AI system is based on principles commonly described in intelligent tutoring research. Studies emphasize that effective educational AI systems should focus on explanation quality, adaptability, and learner engagement rather than simply providing correct answers [3], [4].
 
 Similar to approaches described in recent AI-assisted programming studies, the system analyzes user-submitted code and provides feedback explaining the cause of errors and possible solutions [6], [8]. Unlike traditional rule-based systems, AI-driven assistants can adjust explanations depending on the user’s question and level of understanding, which has been shown to improve learning outcomes [6].
