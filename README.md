@@ -1,6 +1,6 @@
 # Introducing AI-mentor 
 ##  an AI-mentor for learning Python
-Title page.Organization: Nazarbayev Intellectual School, Aktau** 
+Title page.Organization: Nazarbayev Intellectual School, Aktau 
 
 Authors: Turebayev Azat Arturovich 10 «C», Baktibayev Alikhan Kurmangalievich 10 «C», Ermura Aqtoty Nurbaiqyzy
 
