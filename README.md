@@ -45,18 +45,32 @@ Most modern AI systems used in education are general-purpose tools designed to o
 
 Research on intelligent tutoring systems suggests that domain-specific educational systems often provide more targeted feedback and structured assistance within their field of specialization [3], [4]. This supports the hypothesis that a narrowly focused AI assistant, concentrated exclusively on programming, may offer deeper conceptual understanding and more effective educational support compared to general-purpose AI tools.
 
-3. Description of the Developed AI System.
+2. Description of the Developed AI System.
 The design of the developed AI system is based on principles commonly described in intelligent tutoring research. Studies emphasize that effective educational AI systems should focus on explanation quality, adaptability, and learner engagement rather than simply providing correct answers [3], [4].
+
 Similar to approaches described in recent AI-assisted programming studies, the system analyzes user-submitted code and provides feedback explaining the cause of errors and possible solutions [6], [8]. Unlike traditional rule-based systems, AI-driven assistants can adjust explanations depending on the user’s question and level of understanding, which has been shown to improve learning outcomes [6].
-4. Methods for Solving the Research Tasks
-The experimental methodology used in this research follows approaches described in studies evaluating AI-assisted learning systems [6], [8]. Programming tasks of comparable difficulty were selected to ensure objective comparison of results. Evaluation criteria such as solution correctness, error frequency, and time efficiency are commonly used in educational technology research and allow for reliable assessment of learning effectiveness [5], [6].
-5. Results and Discussion.<p align="center">
+3. Methods for Solving the Research Tasks
+To evaluate the effectiveness of the developed domain-specialized AI system, a structured experimental methodology was applied. A set of programming tasks of equal difficulty was prepared, covering beginner-level topics such as variables, conditional statements, loops, and simple algorithms.
+The experiment was conducted in two stages. First, participants solved programming tasks without AI assistance. Second, comparable tasks were solved using the developed AI system. This allowed for comparative analysis of learning effectiveness.
+The evaluation criteria included:
+
+Correctness of solutions;
+
+Number of repeated errors;
+
+Time required to complete tasks;
+
+Observed improvement in logical reasoning.
+
+Such evaluation methods are commonly used in research on educational technologies and AI-based tutoring systems [5], [6], allowing objective assessment of learning outcomes.
+4. Results and Discussion.<p align="center">
     <strong>Figure 1: Pedagogical benefits</strong><br>
     <img src="Graph 1"  width="800">
 </p>
 The results obtained in this study are consistent with findings reported in recent research on AI in programming education. Multiple studies indicate that personalized feedback is one of the most significant advantages of AI-based learning systems [6], [7]. As shown in Figure 1, personalized feedback (44.83%) was identified as the most impactful factor, supporting conclusions made by Tang et al. Regarding scalable AI feedback in programming classrooms [7].
 Learning gains and improved time efficiency observed in this research are also supported by previous studies, which report that AI assistants help reduce debugging time and improve conceptual understanding [6], [8]. However, researchers also emphasize that AI should be used as a complementary tool rather than a replacement for traditional instruction [4], [5], which aligns with the conclusions of this work.
-Conclusion. The findings of this research confirm conclusions made in previous studies that artificial intelligence can significantly support programming education by providing adaptive feedback and reducing learning difficulties [4], [6]. The independently developed AI system demonstrates practical value and aligns with current trends in educational technology development [5]
+Conclusion. The findings of this research confirm conclusions made in previous studies that artificial intelligence can significantly support programming education by providing adaptive feedback and reducing learning difficulties [4], [6]. The independently developed AI system demonstrates practical value and aligns with current trends in educational technology development [5].
+
 ### References.
 [1] Robins A., Rountree J., Rountree N.
 Learning and Teaching Programming: A Review and Discussion.
