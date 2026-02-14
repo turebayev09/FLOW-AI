@@ -9,6 +9,7 @@ Field and section: AI programming
 Mentor: Edil Abdykalykov
 City: Astana, 2026
 
+<a href="https://youtu.be/Q0dRzjslBns?si=zDRIQFzghyUsC79L">Flow AI. Watch introduction vide on YouTube</a>
 
 
 
